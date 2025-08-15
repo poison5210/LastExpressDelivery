@@ -80,6 +80,24 @@ const routes = [
     name: 'Exception',
     component: () => import('../views/system/Exception.vue'),
     meta: { requiresAuth: true }
+  },
+  {
+    path: '/analytics',
+    name: 'Analytics',
+    component: () => import('../views/analytics/Analytics.vue'),
+    meta: { requiresAuth: true, roles: ['admin'] }
+  },
+  {
+    path: '/ai-assistant',
+    name: 'AIAssistant',
+    component: () => import('../views/ai/AIAssistant.vue'),
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/blockchain',
+    name: 'BlockchainTrack',
+    component: () => import('../views/blockchain/BlockchainTrack.vue'),
+    meta: { requiresAuth: true }
   }
 ]
 

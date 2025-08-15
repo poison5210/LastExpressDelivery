@@ -42,6 +42,15 @@
             <el-menu-item index="/profile">个人信息</el-menu-item>
             <el-menu-item index="/settings" v-if="userStore.currentUser?.role === 'admin'">系统设置</el-menu-item>
           </el-sub-menu>
+          <el-sub-menu index="5" v-if="userStore.currentUser?.role === 'admin'">
+            <template #title>
+              <el-icon><DataAnalysis /></el-icon>
+              <span>高级功能</span>
+            </template>
+            <el-menu-item index="/analytics">数据分析</el-menu-item>
+            <el-menu-item index="/ai-assistant">AI助手</el-menu-item>
+            <el-menu-item index="/blockchain">区块链追踪</el-menu-item>
+          </el-sub-menu>
         </el-menu>
       </el-aside>
       <el-container>
@@ -83,7 +92,8 @@ import {
   Document,
   Location,
   Setting,
-  ArrowDown
+  ArrowDown,
+  DataAnalysis
 } from '@element-plus/icons-vue'
 
 const router = useRouter()
