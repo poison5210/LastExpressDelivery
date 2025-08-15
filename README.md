@@ -1,5 +1,211 @@
-# Vue 3 + Vite
+# 智能快递管理系统 (SmartLogi)
 
-This template should help get you started developing with Vue 3 in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+一个基于 Vue 3 + Element Plus 的现代化快递管理系统，提供完整的订单管理、物流追踪、用户管理等功能。
 
-Learn more about IDE Support for Vue in the [Vue Docs Scaling up Guide](https://vuejs.org/guide/scaling-up/tooling.html#ide-support).
+## 🌟 功能特性
+
+### 🔐 用户认证
+- 用户登录/注册
+- 基于角色的权限控制
+- 个人信息管理
+- 密码修改和安全设置
+
+### 📦 订单管理
+- 创建新订单
+- 订单列表查看
+- 订单详情管理
+- 订单状态更新
+- 运单打印功能
+
+### 🚚 物流追踪
+- 实时位置追踪
+- 配送路线规划
+- 订单状态追踪
+- 地图可视化显示
+
+### 👥 用户管理 (管理员)
+- 用户列表管理
+- 角色权限设置
+- 用户状态控制
+
+### ⚙️ 系统管理
+- 系统设置配置
+- 异常处理管理
+- 操作日志记录
+- 通知设置
+
+### 📊 数据统计
+- 订单统计图表
+- 配送区域分布
+- 实时数据展示
+- 业务指标监控
+
+## 🛠️ 技术栈
+
+- **前端框架**: Vue 3 (Composition API)
+- **UI 组件库**: Element Plus
+- **状态管理**: Pinia
+- **路由管理**: Vue Router 4
+- **构建工具**: Vite
+- **图表库**: ECharts
+- **地图服务**: 高德地图 API
+- **样式预处理**: Sass
+
+## 🚀 快速开始
+
+### 环境要求
+- Node.js >= 16.0.0
+- npm >= 8.0.0
+
+### 安装依赖
+```bash
+npm install
+```
+
+### 开发环境运行
+```bash
+npm run dev
+```
+
+### 生产环境构建
+```bash
+npm run build
+```
+
+### 预览构建结果
+```bash
+npm run preview
+```
+
+## 🔑 演示账号
+
+系统提供以下演示账号用于测试：
+
+### 管理员账号
+- **用户名**: admin
+- **密码**: 123456
+- **权限**: 完整系统访问权限
+
+### 快递员账号
+- **用户名**: courier
+- **密码**: 123456
+- **权限**: 订单管理、物流追踪权限
+
+## 📱 功能模块
+
+### 1. 仪表盘
+- 订单统计概览
+- 实时业务数据
+- 快捷操作入口
+- 系统通知提醒
+
+### 2. 用户管理 (管理员专用)
+- **用户列表**: 查看、编辑、删除用户
+- **角色管理**: 角色权限配置
+- **权限控制**: 基于角色的访问控制
+
+### 3. 订单管理
+- **订单列表**: 支持多条件筛选和分页
+- **创建订单**: 三步式订单创建流程
+- **订单详情**: 完整订单信息展示
+- **状态管理**: 订单状态实时更新
+
+### 4. 物流追踪
+- **订单追踪**: 输入订单号查询物流信息
+- **实时地图**: 配送员位置实时显示
+- **路线规划**: 最优配送路线计算
+- **联系功能**: 一键联系配送员
+
+### 5. 系统管理
+- **个人信息**: 头像、基本信息修改
+- **安全设置**: 密码、手机号、邮箱修改
+- **系统设置**: 基本配置、通知设置等
+- **异常管理**: 异常记录和处理流程
+
+## 🎨 界面设计
+
+- **现代化设计**: 采用深色主题和现代化UI设计
+- **响应式布局**: 支持桌面端和移动端访问
+- **直观操作**: 简洁明了的用户界面
+- **数据可视化**: 丰富的图表和地图展示
+
+## 🔒 权限系统
+
+系统采用基于角色的访问控制(RBAC)：
+
+### 管理员权限
+- ✅ 用户管理
+- ✅ 角色管理
+- ✅ 订单管理
+- ✅ 物流追踪
+- ✅ 系统设置
+- ✅ 异常管理
+
+### 快递员权限
+- ❌ 用户管理
+- ❌ 角色管理
+- ✅ 订单管理
+- ✅ 物流追踪
+- ✅ 个人信息
+- ✅ 异常处理
+
+## 📂 项目结构
+
+```
+src/
+├── components/          # 公共组件
+├── views/              # 页面组件
+│   ├── Login.vue       # 登录页面
+│   ├── Dashboard.vue   # 仪表盘
+│   ├── user/          # 用户管理
+│   ├── order/         # 订单管理
+│   ├── tracking/      # 物流追踪
+│   └── system/        # 系统管理
+├── stores/            # Pinia 状态管理
+│   ├── user.js        # 用户状态
+│   └── order.js       # 订单状态
+├── router/            # 路由配置
+│   └── index.js
+├── style.css          # 全局样式
+└── main.js           # 应用入口
+```
+
+## 🌐 在线演示
+
+项目已部署到 Netlify，可以通过以下链接访问：
+
+**演示地址**: [https://mellifluous-florentine-a7280b.netlify.app](https://mellifluous-florentine-a7280b.netlify.app)
+
+## 🤝 贡献指南
+
+1. Fork 本仓库
+2. 创建特性分支 (`git checkout -b feature/AmazingFeature`)
+3. 提交更改 (`git commit -m 'Add some AmazingFeature'`)
+4. 推送到分支 (`git push origin feature/AmazingFeature`)
+5. 开启 Pull Request
+
+## 📄 许可证
+
+本项目采用 MIT 许可证 - 查看 [LICENSE](LICENSE) 文件了解详情
+
+## 📞 联系方式
+
+如有问题或建议，请通过以下方式联系：
+
+- 项目地址: [GitHub Repository]
+- 问题反馈: [Issues]
+
+## 🔄 更新日志
+
+### v1.0.0 (2024-02-20)
+- ✨ 初始版本发布
+- 🔐 用户认证系统
+- 📦 订单管理功能
+- 🚚 物流追踪系统
+- 👥 用户权限管理
+- 📊 数据统计展示
+- 🎨 现代化UI设计
+
+---
+
+**SmartLogi** - 让快递管理更智能 🚀
