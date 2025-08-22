@@ -508,7 +508,9 @@ function scrollToBottom() {
 
 <style scoped>
 .ai-assistant {
+  width: 100%;
   padding: 20px;
+  box-sizing: border-box;
 }
 
 .chat-card {

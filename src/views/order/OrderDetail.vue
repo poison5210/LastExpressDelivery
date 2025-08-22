@@ -158,7 +158,9 @@ function submitException() {
 
 <style scoped>
 .order-detail {
+  width: 100%;
   padding: 20px;
+  box-sizing: border-box;
 }
 
 .card-header {

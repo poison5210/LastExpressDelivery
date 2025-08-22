@@ -519,7 +519,9 @@ async function submitEmailChange() {
 
 <style scoped>
 .profile {
+  width: 100%;
   padding: 20px;
+  box-sizing: border-box;
 }
 
 .card-header {

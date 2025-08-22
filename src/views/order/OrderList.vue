@@ -342,7 +342,9 @@ function handleCurrentChange(val) {
 
 <style scoped>
 .order-list {
+  width: 100%;
   padding: 20px;
+  box-sizing: border-box;
 }
 
 .card-header {

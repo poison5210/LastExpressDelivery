@@ -620,7 +620,9 @@ function disposeCharts() {
 
 <style scoped>
 .analytics {
+  width: 100%;
   padding: 20px;
+  box-sizing: border-box;
 }
 
 .card-header {

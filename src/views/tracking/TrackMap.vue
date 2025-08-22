@@ -243,7 +243,9 @@ function handleCallPhone() {
 
 <style scoped>
 .track-map {
+  width: 100%;
   padding: 20px;
+  box-sizing: border-box;
 }
 
 .card-header {

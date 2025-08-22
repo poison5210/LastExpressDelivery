@@ -196,7 +196,9 @@ async function saveSettings() {
 
 <style scoped>
 .settings {
+  width: 100%;
   padding: 20px;
+  box-sizing: border-box;
 }
 
 .card-header {

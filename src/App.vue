@@ -131,7 +131,10 @@ function handleLogout() {
 
 <style scoped>
 .app-wrapper {
+  width: 100%;
   height: 100vh;
+  margin: 0;
+  padding: 0;
 }
 
 .header-wrapper {
@@ -152,7 +155,8 @@ function handleLogout() {
 }
 
 .el-menu {
-  border-right: none;
+  width: 100%;
+  padding: 0;
 }
 
 .user-profile {

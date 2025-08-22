@@ -390,7 +390,9 @@ async function submitProcess() {
 
 <style scoped>
 .exception {
+  width: 100%;
   padding: 20px;
+  box-sizing: border-box;
 }
 
 .card-header {

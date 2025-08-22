@@ -315,7 +315,9 @@ const handleMoreOrders = () => {
 
 <style scoped>
 .dashboard {
+  width: 100%;
   padding: 20px;
+  box-sizing: border-box;
 }
 
 .stats-card {

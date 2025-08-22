@@ -310,7 +310,9 @@ function handleSavePermissions() {
 
 <style scoped>
 .role-list {
+  width: 100%;
   padding: 20px;
+  box-sizing: border-box;
 }
 
 .card-header {
