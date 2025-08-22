@@ -20,7 +20,7 @@
               <div class="message-avatar">
                 <el-avatar v-if="message.type === 'user'" :src="userAvatar" />
                 <el-avatar v-else>
-                  <el-icon><Robot /></el-icon>
+                  <el-icon><Cpu /></el-icon>
                 </el-avatar>
               </div>
               <div class="message-content">
@@ -46,7 +46,7 @@
             <div v-if="aiTyping" class="typing-indicator">
               <div class="message-avatar">
                 <el-avatar>
-                  <el-icon><Robot /></el-icon>
+                  <el-icon><Cpu /></el-icon>
                 </el-avatar>
               </div>
               <div class="typing-dots">
@@ -226,7 +226,7 @@
 
 <script setup>
 import { ref, reactive, onMounted, nextTick } from 'vue'
-import { Robot, Microphone } from '@element-plus/icons-vue'
+import { Cpu, Microphone } from '@element-plus/icons-vue'
 import { ElMessage } from 'element-plus'
 import * as echarts from 'echarts'
 
