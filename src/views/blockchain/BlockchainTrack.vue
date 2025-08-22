@@ -60,7 +60,7 @@
           <el-col :span="8">
             <div class="info-card">
               <div class="info-icon">
-                <el-icon><Shield /></el-icon>
+                <el-icon><Lock /></el-icon>
               </div>
               <div class="info-content">
                 <div class="info-value">{{ blockchainData.security }}</div>
@@ -237,7 +237,7 @@
 
 <script setup>
 import { ref, reactive } from 'vue'
-import { Search, Lock, Timer, Shield, CircleCheck } from '@element-plus/icons-vue'
+import { Search, Lock, Timer, CircleCheck } from '@element-plus/icons-vue'
 import { ElMessage } from 'element-plus'
 
 const searching = ref(false)
