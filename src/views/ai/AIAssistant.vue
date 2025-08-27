@@ -225,13 +225,15 @@
 </template>
 
 <script setup>
-import { ref, reactive, onMounted, nextTick } from 'vue'
+import { ref, reactive, onMounted, nextTick, computed } from 'vue'
 import { Cpu, Microphone } from '@element-plus/icons-vue'
 import { ElMessage } from 'element-plus'
 import * as echarts from 'echarts'
+import { useChatStore } from '../../stores/chat'
+
+const chatStore = useChatStore()
 
 const aiOnline = ref(true)
-const aiTyping = ref(false)
 const voiceInputActive = ref(false)
 const inputMessage = ref('')
 const chatContainer = ref(null)
@@ -243,26 +245,33 @@ const predicting = ref(false)
 
 const userAvatar = 'https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png'
 
-const chatMessages = ref([
-  {
-    id: 1,
-    type: 'ai',
-    sender: 'AI助手',
-    content: '您好！我是您的AI智能助手，可以帮助您进行路线优化、数据分析、客服支持等工作。有什么可以帮助您的吗？',
-    time: '09:00',
-    actions: [
-      { id: 1, label: '查看今日订单', action: 'viewOrders' },
-      { id: 2, label: '优化配送路线', action: 'optimizeRoute' },
-      { id: 3, label: '生成报表', action: 'generateReport' }
-    ]
+// 使用 store 中的数据
+const chatMessages = computed(() => chatStore.messages)
+const aiTyping = computed(() => chatStore.isTyping)
+
+// 初始化欢迎消息
+onMounted(() => {
+  if (chatMessages.value.length === 0) {
+    chatStore.addMessage({
+      type: 'ai',
+      sender: 'AI助手',
+      content: '您好！我是小智，您的AI智能助手。我可以帮助您进行快递管理、数据分析、业务咨询等工作。有什么可以帮助您的吗？',
+      actions: [
+        { id: 1, label: '查看今日数据', action: 'viewTodayData' },
+        { id: 2, label: '分析配送效率', action: 'analyzeEfficiency' },
+        { id: 3, label: '优化建议', action: 'getOptimization' }
+      ]
+    })
   }
-])
+})
 
 const quickActions = [
-  { id: 1, label: '今日数据概览', message: '请显示今日的数据概览' },
-  { id: 2, label: '异常订单检查', message: '检查是否有异常订单' },
-  { id: 3, label: '效率分析', message: '分析当前配送效率' },
-  { id: 4, label: '成本优化建议', message: '给出成本优化建议' }
+  { id: 1, label: '今日数据概览', message: '请帮我分析今日的业务数据概览' },
+  { id: 2, label: '异常订单检查', message: '帮我检查是否有异常订单需要处理' },
+  { id: 3, label: '效率分析', message: '分析当前的配送效率，给出改进建议' },
+  { id: 4, label: '成本优化', message: '分析运营成本，提供优化建议' },
+  { id: 5, label: '客户满意度', message: '分析客户满意度情况' },
+  { id: 6, label: '业务预测', message: '基于历史数据预测未来业务趋势' }
 ]
 
 const routeForm = reactive({
@@ -286,101 +295,20 @@ const predictionForm = reactive({
 
 const predictionResult = ref(null)
 
-onMounted(() => {
-  scrollToBottom()
-})
-
-function sendMessage() {
+async function sendMessage() {
   if (!inputMessage.value.trim()) return
   
-  const userMessage = {
-    id: Date.now(),
-    type: 'user',
-    sender: '您',
-    content: inputMessage.value,
-    time: new Date().toLocaleTimeString().slice(0, 5)
-  }
-  
-  chatMessages.value.push(userMessage)
-  const question = inputMessage.value
+  const message = inputMessage.value.trim()
   inputMessage.value = ''
   
-  // 模拟AI回复
-  aiTyping.value = true
-  setTimeout(() => {
-    const aiResponse = generateAIResponse(question)
-    chatMessages.value.push(aiResponse)
-    aiTyping.value = false
-    scrollToBottom()
-  }, 1500)
+  // 发送给真实AI
+  await chatStore.sendToAI(message, true) // 使用流式响应
   
   scrollToBottom()
 }
 
 function sendQuickMessage(message) {
-  inputMessage.value = message
-  sendMessage()
-}
-
-function generateAIResponse(question) {
-  const responses = {
-    '今日数据概览': {
-      content: `根据实时数据分析：
-      <br>• 今日订单总数：234单 (↑15%)
-      <br>• 已完成配送：189单 (80.8%)
-      <br>• 平均配送时间：2.3小时
-      <br>• 客户满意度：4.8/5.0
-      <br>• 异常订单：3单 (需要关注)`,
-      actions: [
-        { id: 1, label: '查看异常订单', action: 'viewExceptions' },
-        { id: 2, label: '导出报表', action: 'exportReport' }
-      ]
-    },
-    '检查异常订单': {
-      content: `检测到以下异常订单：
-      <br>• ORD001: 配送超时 (已延迟2小时)
-      <br>• ORD045: 地址无法送达
-      <br>• ORD078: 客户投诉 (包裹损坏)
-      <br><br>建议立即处理这些异常情况。`,
-      actions: [
-        { id: 1, label: '处理异常', action: 'handleExceptions' },
-        { id: 2, label: '联系客户', action: 'contactCustomer' }
-      ]
-    },
-    '效率分析': {
-      content: `配送效率分析结果：
-      <br>• 整体效率：85% (良好)
-      <br>• 最高效区域：海淀区 (92%)
-      <br>• 待优化区域：朝阳区 (78%)
-      <br>• 建议：增加朝阳区配送人员或优化路线`,
-      actions: [
-        { id: 1, label: '路线优化', action: 'optimizeRoute' },
-        { id: 2, label: '人员调配', action: 'staffAllocation' }
-      ]
-    },
-    default: {
-      content: `我理解您的问题。基于当前数据分析，我建议：
-      <br>• 关注配送效率优化
-      <br>• 加强异常订单处理
-      <br>• 提升客户服务质量
-      <br><br>需要我为您详细分析某个方面吗？`,
-      actions: [
-        { id: 1, label: '详细分析', action: 'detailedAnalysis' },
-        { id: 2, label: '生成建议', action: 'generateSuggestions' }
-      ]
-    }
-  }
-  
-  const response = responses[question] || responses.default
-  
-  return {
-    id: Date.now(),
-    type: 'ai',
-    sender: 'AI助手',
-    content: response.content,
-    time: new Date().toLocaleTimeString().slice(0, 5),
-    actions: response.actions
-  }
+  chatStore.sendToAI(message, true)
 }
 
 function formatMessage(content) {
@@ -389,7 +317,21 @@ function formatMessage(content) {
 
 function executeAction(action) {
   ElMessage.success(`执行操作: ${action.label}`)
-  // 这里可以添加具体的操作逻辑
+  
+  // 根据不同操作执行相应逻辑
+  switch(action.action) {
+    case 'viewTodayData':
+      chatStore.sendToAI('请详细分析今日的业务数据，包括订单量、配送情况、收入等关键指标')
+      break
+    case 'analyzeEfficiency':
+      chatStore.sendToAI('请分析当前的配送效率，找出可以改进的地方')
+      break
+    case 'getOptimization':
+      chatStore.sendToAI('基于当前业务情况，给出具体的优化建议')
+      break
+    default:
+      chatStore.sendToAI(`请帮我处理：${action.label}`)
+  }
 }
 
 function toggleVoiceInput() {
@@ -400,6 +342,11 @@ function toggleVoiceInput() {
   } else {
     ElMessage.info('语音输入已关闭')
   }
+}
+
+// 清空对话
+function clearChat() {
+  chatStore.clearMessages()
 }
 
 function optimizeRoute() {
@@ -504,6 +451,18 @@ function scrollToBottom() {
     }
   })
 }
+
+// 监听消息变化，自动滚动到底部
+watch(() => chatMessages.value.length, () => {
+  scrollToBottom()
+}, { flush: 'post' })
+
+// 监听AI输入状态变化，自动滚动
+watch(() => aiTyping.value, () => {
+  if (aiTyping.value) {
+    scrollToBottom()
+  }
+}, { flush: 'post' })
 </script>
 
 <style scoped>
