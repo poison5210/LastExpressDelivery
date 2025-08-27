@@ -16,7 +16,8 @@
     "axios": "^1.6.7",
     "@amap/amap-jsapi-loader": "^1.0.1",
     "echarts": "^5.4.3",
-    "@vueuse/core": "^10.7.2"
+    "@vueuse/core": "^10.7.2",
+    "openai": "^4.28.0"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^5.1.3",

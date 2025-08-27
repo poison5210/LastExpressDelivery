@@ -29,6 +29,10 @@
                   <span class="time">{{ message.time }}</span>
                 </div>
                 <div class="message-text" v-html="formatMessage(message.content)"></div>
+                <div v-if="message.streaming" class="streaming-indicator">
+                  <el-icon class="is-loading"><Loading /></el-icon>
+                  <span>AI正在思考...</span>
+                </div>
                 <div class="message-actions" v-if="message.type === 'ai' && message.actions">
                   <el-button
                     v-for="action in message.actions"
@@ -62,18 +66,27 @@
               v-model="inputMessage"
               placeholder="输入您的问题..."
               @keyup.enter="sendMessage"
-              :disabled="aiTyping">
+              :disabled="aiTyping"
+              :loading="aiTyping">
               <template #prepend>
                 <el-button @click="toggleVoiceInput" :type="voiceInputActive ? 'primary' : 'default'">
                   <el-icon><Microphone /></el-icon>
                 </el-button>
               </template>
               <template #append>
-                <el-button type="primary" @click="sendMessage" :loading="aiTyping">
+                <el-button type="primary" @click="sendMessage" :loading="aiTyping" :disabled="!inputMessage.trim()">
                   发送
                 </el-button>
               </template>
             </el-input>
+            <div class="input-actions">
+              <el-button size="small" @click="clearChat" type="danger" plain>
+                清空对话
+              </el-button>
+              <el-button size="small" @click="chatStore.regenerateLastResponse" :loading="aiTyping" plain>
+                重新生成
+              </el-button>
+            </div>
           </div>
           
           <div class="quick-actions">
@@ -580,6 +593,22 @@ watch(() => aiTyping.value, () => {
 .chat-input {
   padding: 20px;
   border-top: 1px solid #ebeef5;
+}
+
+.input-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.streaming-indicator {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #409EFF;
+  font-size: 12px;
+  margin-top: 8px;
 }
 
 .quick-actions {
